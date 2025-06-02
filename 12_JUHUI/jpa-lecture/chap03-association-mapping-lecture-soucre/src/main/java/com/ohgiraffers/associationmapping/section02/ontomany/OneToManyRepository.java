@@ -3,8 +3,7 @@ package com.ohgiraffers.associationmapping.section02.ontomany;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OneToManyService {
-
+public class OneToManyRepository {
     private OneToManyRepository oneToManyRepository;
 
     public OneToManyService(OneToManyRepository oneToManyRepository) {
