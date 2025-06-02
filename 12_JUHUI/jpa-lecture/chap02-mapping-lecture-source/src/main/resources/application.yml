@@ -6,7 +6,7 @@ spring:
     username: ohgiraffers
     password: ohgiraffers
   jpa:
-    show-sql: true # ?? ? SQL ??? ??????? ??
+    show-sql: true
     hibernate:
       ddl-auto: create
     properties:

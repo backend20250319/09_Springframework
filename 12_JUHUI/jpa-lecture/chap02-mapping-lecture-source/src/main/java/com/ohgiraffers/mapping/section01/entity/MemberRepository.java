@@ -11,13 +11,13 @@ public class MemberRepository {
     private EntityManager entityManager;
 
     public void save(Member member) {
-        entityManager.persist(member); // 등록
+        entityManager.persist(member);
     }
 
-    public static String findNameById(String memberId) {
+    public String findNameById(String memberId) {
         // JPQL 활용(테이블명 -> 엔티티명, 컬럼명 -> 필드명)
-        // 엔터티는 반드시 별칭을 사용해야한다.
+        // 엔터티는 반드시 별칭을 사용해야 한다.
         String jpql = "SELECT m.memberName FROM entityMember m WHERE m.memberId='" + memberId + "'";
-        return EntityManager.createQuery(jpql, String.class).getSingleResult();
+        return entityManager.createQuery(jpql, String.class).getSingleResult();
     }
 }

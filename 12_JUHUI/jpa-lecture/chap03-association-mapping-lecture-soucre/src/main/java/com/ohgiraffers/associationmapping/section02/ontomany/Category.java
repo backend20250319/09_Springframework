@@ -1,0 +1,30 @@
+package com.ohgiraffers.associationmapping.section02.ontomany;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.util.List;
+
+@Entity(name = "category_and_menu")
+@Table(name = "tbl_category")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@ToString
+public class Category {
+
+    @Id
+    private int categoryCode;
+    private String categoryName;
+    private Integer refCategoryCode;
+
+    /*
+    * fetch type default는 LAZY 로 필요한 시점에 별로돌 로딩해온다.(SELECT문이 별도록 명시해주어야 JOIN 되어 한번에 조회된다.)
+    * */
+    @OneToMany
+    @JoinColumn(name = "categoryCode") // "FK 컬럼명 작성"
+    private List<Menu> menuList;
+}
