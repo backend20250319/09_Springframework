@@ -3,8 +3,6 @@ package com.ohgiraffers.associationmapping.section01.manytoone;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Locale;
-
 @Service
 public class ManyToOneService {
 

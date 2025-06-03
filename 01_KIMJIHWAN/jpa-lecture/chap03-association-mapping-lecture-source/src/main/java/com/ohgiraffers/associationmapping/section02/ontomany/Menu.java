@@ -1,16 +1,16 @@
 package com.ohgiraffers.associationmapping.section02.ontomany;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-
+@Entity(name="menuSection02")
+@Table(name="tbl_menu")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 @ToString
 public class Menu {
 
@@ -19,6 +19,5 @@ public class Menu {
     private String menuName;
     private int menuPrice;
     private int categoryCode;
-    public String orderableStatus;
-
+    private String orderableStatus;
 }

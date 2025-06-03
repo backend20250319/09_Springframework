@@ -1,9 +1,9 @@
 package com.ohgiraffers.associationmapping.section02.ontomany;
 
-import jakarta.persistence.Id;
 import lombok.*;
 
 import java.util.List;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,7 +12,6 @@ import java.util.List;
 @ToString
 public class CategoryDTO {
 
-    @Id
     private int categoryCode;
     private String categoryName;
     private Integer refCategoryCode;

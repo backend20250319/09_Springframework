@@ -3,6 +3,7 @@ package com.ohgiraffers.associationmapping.section01.manytoone;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

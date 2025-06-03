@@ -1,21 +1,25 @@
 package com.ohgiraffers.associationmapping.section01.manytoone;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.ToString;
 
 @Entity(name="Section01Category")
 @Table(name="tbl_category")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@ToString
 public class Category {
 
     @Id
-    // @Column : yml파일에 써준 카멜케이스를 해당 부분을
     private int categoryCode;
     private String categoryName;
     private Integer refCategoryCode;
+
 }

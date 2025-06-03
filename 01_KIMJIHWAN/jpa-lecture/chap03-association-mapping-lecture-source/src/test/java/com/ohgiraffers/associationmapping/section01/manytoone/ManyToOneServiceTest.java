@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ManyToOneServiceTest {

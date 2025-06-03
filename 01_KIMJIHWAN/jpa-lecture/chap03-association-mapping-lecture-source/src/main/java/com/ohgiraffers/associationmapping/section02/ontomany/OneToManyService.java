@@ -39,7 +39,7 @@ public class OneToManyService {
         );
         List<Menu> menuList = new ArrayList<>();
         menuList.add(menu);
-        categoryInfo.setMenuList(menuList);
+        category.setMenuList(menuList);
 
         oneToManyRepository.regist(category);
     }

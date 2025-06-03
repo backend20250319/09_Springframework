@@ -1,9 +1,7 @@
 package com.ohgiraffers.associationmapping.section02.ontomany;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.*;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
