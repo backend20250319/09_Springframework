@@ -11,6 +11,6 @@ public class SimpleJPQLRepository {
     private EntityManager entityManager;
 
     public String selectSingleMenuByTypedQuery(){
-        String jpql = 
+        String jpql =
     }
 }
