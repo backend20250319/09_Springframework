@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity(name = "menu_and_category")
+@Entity(name = "menuSection02")
 @Table(name = "tbl_menu")
 @NoArgsConstructor
 @AllArgsConstructor

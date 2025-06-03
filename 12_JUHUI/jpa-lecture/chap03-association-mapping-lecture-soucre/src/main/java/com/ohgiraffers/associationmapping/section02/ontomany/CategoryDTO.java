@@ -2,6 +2,7 @@ package com.ohgiraffers.associationmapping.section02.ontomany;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -14,6 +15,6 @@ public class CategoryDTO {
     private int categoryCode;
     private String categoryName;
     private Integer refCategoryCode;
-    private List<MenuDTO> menuList;
+    private List<MenuDTO> menuList = new ArrayList<>();
 
 }

@@ -27,7 +27,7 @@ public class ManyToOneService {
                 menuInfo.getMenuName(),
                 menuInfo.getMenuPrice(),
                 new Category(
-                        menuInfo.getCategory().getCategoryId(),
+                        menuInfo.getCategory().getCategoryCode(),
                         menuInfo.getCategory().getCategoryName(),
                         menuInfo.getCategory().getRefCategoryCode()
                 ),

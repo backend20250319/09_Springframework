@@ -55,8 +55,10 @@ class OneToManyServiceTest {
                 menuCode, menuName, menuPrice, categoryCode, orderableStatus
         );
 
-        // when
+        menuList.add(menuInfo);                    // MenuDTO를 리스트에 추가
+        categoryInfo.setMenuList(menuList);        // 리스트를 CategoryDTO에 설정
 
+        // when
         // then
         Assertions.assertDoesNotThrow(
                 () -> oneToManyService.registMenu(categoryInfo)

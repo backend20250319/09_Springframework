@@ -1,19 +1,20 @@
 package com.ohgiraffers.associationmapping.section02.ontomany;
 
-import org.springframework.stereotype.Service;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class OneToManyRepository {
-    private OneToManyRepository oneToManyRepository;
 
-    public OneToManyService(OneToManyRepository oneToManyRepository) {
-        this.oneToManyRepository = oneToManyRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public Category find(int categoryCode){
+        return entityManager.find(Category.class, categoryCode);
     }
 
-    public Category findCategory(int categoryCode){
-        Category category = oneToManyRepository.find(categoryCode);
-        System.out.println("category ===>>> " + category);
-
-        return category;
+    public void regist(Category category){
+        entityManager.persist(category);
     }
 }
