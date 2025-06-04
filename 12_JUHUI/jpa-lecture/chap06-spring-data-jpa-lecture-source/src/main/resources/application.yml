@@ -1,5 +1,4 @@
 #spring.application.name=chap06-spring-data-jpa-lecture-source
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -18,4 +17,3 @@ spring:
   output:
     ansi:
       enabled: always
-

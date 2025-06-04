@@ -3,5 +3,5 @@ package com.ohgiraffers.datajpa.config;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class BieanConfig {
+public class BeanConfig {
 }
