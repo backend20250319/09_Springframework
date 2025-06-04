@@ -33,7 +33,7 @@ class GroupFunctionRepositoryTest {
         int categoryCode = 7777;
         assertDoesNotThrow(
                 () -> {
-                    Long sumMenuPrice = groupFunctionRepository.sumMenuPriceOfCategory(categoryCode)
+                    Long sumMenuPrice = groupFunctionRepository.sumMenuPriceOfCategory(categoryCode);
                     System.out.println("sumMenuPrice = " + sumMenuPrice);
                 }
         );
