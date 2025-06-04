@@ -1,13 +1,14 @@
-package com.ohgiraffers.jpql.simple;
+package com.ohgiraffers.jpql.section02.parameter;
 
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity(name="Section01Menu")
+@Entity(name="Section02Menu")
 @Table(name="tbl_menu")
 public class Menu {
+
     @Id
     private int menuCode;
     private String menuName;
@@ -16,6 +17,7 @@ public class Menu {
     private String orderableStatus;
 
     public Menu() {}
+
     public Menu(
             int menuCode, String menuName, int menuPrice,
             int categoryCode, String orderableStatus
@@ -57,6 +59,7 @@ public class Menu {
     public void setOrderableStatus(String orderableStatus) {
         this.orderableStatus = orderableStatus;
     }
+
     @Override
     public String toString() {
         return "Menu [menuCode=" + menuCode + ", menuName=" + menuName +
