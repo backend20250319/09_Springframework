@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 @Entity(name="Section01Menu")
 @Table(name="tbl_menu")
 public class Menu {
+
     @Id
     private int menuCode;
     private String menuName;
@@ -15,6 +16,7 @@ public class Menu {
     private String orderableStatus;
 
     public Menu() {}
+
     public Menu(
             int menuCode, String menuName, int menuPrice,
             int categoryCode, String orderableStatus
