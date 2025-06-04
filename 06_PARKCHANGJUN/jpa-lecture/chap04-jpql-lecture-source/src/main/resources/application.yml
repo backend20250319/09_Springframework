@@ -13,6 +13,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    mapping-resources:
+      - section08/namedquery/menu-query.xml
+  output:
+    ansi:
+      enabled: always
 
 # DB 연결 : menudb MySQL 사용, 사용자 : ohgiraffers
 # 테이블 생성 : Hibernate가 자동으로 테이블 만들지 않음(ddl:auto : none)
