@@ -1,4 +1,5 @@
 ### 기본 문자열
 GET http://localhost:8080/response/hello
 
-###
+### Object 응답
+GET http://localhost:8080/response/message

@@ -14,5 +14,10 @@ public class ResponseController {
         return "Hello World🫂🫂";
     }
 
+    /* 2. Object 응답 */
+    @GetMapping("/message")
+    public Message message() {
+        return new Message(200, "메세지를 응답합니다.");
+    }
 
 }
