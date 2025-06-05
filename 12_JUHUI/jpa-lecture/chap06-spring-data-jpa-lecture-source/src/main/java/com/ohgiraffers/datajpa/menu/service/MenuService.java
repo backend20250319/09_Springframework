@@ -4,6 +4,7 @@ import com.ohgiraffers.datajpa.menu.dto.CategoryDTO;
 import com.ohgiraffers.datajpa.menu.dto.MenuDTO;
 import com.ohgiraffers.datajpa.menu.entity.Category;
 import com.ohgiraffers.datajpa.menu.entity.Menu;
+import com.ohgiraffers.datajpa.menu.respository.CategoryRepository;
 import com.ohgiraffers.datajpa.menu.respository.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,6 +23,7 @@ public class MenuService {
 
     private MenuRepository menuRepository;
     private final ModelMapper modelMapper;
+    private final CategoryRepository categoryRepository;
 
     /* DTO와 Entity의 분리
      * DTO(Data Transfer Object)는 프레젠테이션 계층과의 데이터 교환을 위한 객체로,
@@ -73,6 +75,7 @@ public class MenuService {
         return menuList.map(menu -> modelMapper.map(menu, MenuDTO.class));
     }
 
+    /* 4. 쿼리 메소드 활용 */
     public List<MenuDTO> findByMenuPrice(Integer menuPrice) {
 
         //List<Menu> menuList = menuRepository.findByMenuPriceGreaterThan(menuPrice);
@@ -84,7 +87,7 @@ public class MenuService {
         return menuList.stream().map(menu -> modelMapper.map(menu, MenuDTO.class)).toList();
     }
 
-    /* 5. */
+    /* 5. JPQL or Native Query */
     public List<CategoryDTO> findAllCategory() {
         List<Category> categoryList = menuRepository.findAllCategory();
         return categoryList.stream().map(category -> modelMapper.map(category, CategoryDTO.class)).toList();
