@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class MenuDTO {
+
     private int menuCode;
     private String menuName;
     private int menuPrice;
@@ -17,7 +18,7 @@ public class MenuDTO {
     private String orderableStatus;
 
     public static MenuDTO changeMenuDto(Menu menu){
-        MenuDTO menuDto = MenuDTO.builder() // @builder 어노테이션을 사용했기 때문
+        MenuDTO menuDto = MenuDTO.builder()
                 .menuCode(menu.getMenuCode())
                 .menuName(menu.getMenuName())
                 .menuPrice(menu.getMenuPrice())
@@ -25,4 +26,6 @@ public class MenuDTO {
                 .orderableStatus(menu.getOrderableStatus()).build();
         return menuDto;
     }
+
+
 }
