@@ -76,11 +76,11 @@ public class MenuService {
 //         List<Menu> menuList = menuRepository.findByMenuPriceGreaterThan(menuPrice);
 
         // 전달 받은 가격을 초과하는 메뉴 목록 조회 + 가격 오름차순 조회
-         List<Menu> menuList = menuRepository.findByMenuPriceGreaterThanOrderByMenuPrice(menuPrice);
+//         List<Menu> menuList = menuRepository.findByMenuPriceGreaterThanOrderByMenuPrice(menuPrice);
 
         // 전달 받은 가격을 초과하는 메뉴 목록  조회 + 전달 받은 정렬 기준
-//        List<Menu> menuList = menuRepository.findByMenuPriceGreaterThan(menuPrice
-//        , Sort.by("menuPrice").descending());
+        List<Menu> menuList = menuRepository.findByMenuPriceGreaterThan(menuPrice
+        , Sort.by("menuPrice").descending());
 
         return menuList.stream().map(menu -> modelMapper.map(menu, MenuDTO.class)).toList();
     }
