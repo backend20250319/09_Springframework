@@ -1,8 +1,18 @@
 package com.jsw.springdata.menu.repository;
 
 import com.jsw.springdata.menu.entity.Menu;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MenuRepository extends JpaRepository<Menu, Integer> {
+import java.util.List;
 
+public interface MenuRepository extends JpaRepository<Menu, Integer> {
+    // 전달 받은 가격을 초과하는 메뉴 목록 조회
+    List<Menu> findByMenuPriceGreaterThan(Integer menuPrice);
+
+    // 전달 받은 가격을 초과하는 메뉴 목로 조회 + 가격 오름차순 조회
+    List<Menu> findByMenuPriceLessThanOrderByMenuPrice(Integer menuPrice);
+
+    // 전달 받은 가격을 초과하는 메뉴 목록 조회 + 전달 받은 정렬 기준
+    List<Menu> findByMenuPriceGreaterThan(Integer menuPrice, Sort sort);
 }

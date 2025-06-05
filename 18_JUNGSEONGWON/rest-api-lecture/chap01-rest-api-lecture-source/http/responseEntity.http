@@ -1,0 +1,11 @@
+### 신규 회원 등록
+POST http://localhost:8080/entity/users
+Content-Type: application/json
+
+{
+    "id" : "user05",
+    "pwd" : "pass05",
+    "name" : "안중근"
+}
+
+###
