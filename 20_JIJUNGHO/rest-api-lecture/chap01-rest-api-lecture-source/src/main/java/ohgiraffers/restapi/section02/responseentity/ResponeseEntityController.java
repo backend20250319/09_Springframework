@@ -43,7 +43,7 @@ public class ResponeseEntityController {
 
         /* 응답 메세지 설정 */
         ResponeseMessage responeseMessage = new ResponeseMessage(
-                2, "조회 성공", responseMap
+                200, "조회 성공", responseMap
         );
 
         return new ResponseEntity<>(responeseMessage, httpHeaders, HttpStatus.OK);
@@ -94,5 +94,12 @@ public class ResponeseEntityController {
         return ResponseEntity.created(URI.create("/entity/users" + userNo)).build();
     }
 
-    
+    // 회원 삭제
+    @DeleteMapping("/users/{userNo}")
+    public ResponseEntity<Void> deleteUser(@PathVariable int userNo) {
+        UserDTO foundUser = users.stream().filter(user -> user.getNo() == userNo).findFirst().get();
+        users.remove(foundUser);
+
+        return ResponseEntity.noContent().build();
+    }
 }
