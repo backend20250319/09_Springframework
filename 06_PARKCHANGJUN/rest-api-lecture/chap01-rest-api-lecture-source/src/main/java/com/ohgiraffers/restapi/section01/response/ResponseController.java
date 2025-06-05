@@ -3,6 +3,7 @@ package com.ohgiraffers.restapi.section01.response;
 /* @RestController : 모든 핸들러 메소드에 @ResponseBody가 적용된 것과 같다. */
 
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,6 +51,12 @@ public class ResponseController {
     @GetMapping(value = "/image", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getImage() throws IOException {
         return getClass().getResourceAsStream("/images/spring.png").readAllBytes();
+    }
+
+    /* 6. ResponseEntity 응답 */
+    @GetMapping("/entity")
+    public ResponseEntity<Message> getEntity() {
+        return ResponseEntity.ok(new Message(200, "정상 수행"));
     }
 }
 
