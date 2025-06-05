@@ -1,0 +1,27 @@
+### 기본 문자열
+GET http://localhost:8080/response/hello
+
+### Message
+GET http://localhost:8080/response/message
+
+### List
+GET http://localhost:8080/response/list
+
+### Map
+GET http://localhost:8080/response/map
+
+### File
+GET http://localhost:8080/response/image
+
+### 신규 회원 등록
+POST http://localhost:8080/entity/users
+Content-Type: application/json
+
+{
+    "id" : "user04",
+    "pwd" : "pass04",
+    "name" : "신사임당"
+}
+
+### 회원 조회
+GET http://localhost:8080/entity/users/5
