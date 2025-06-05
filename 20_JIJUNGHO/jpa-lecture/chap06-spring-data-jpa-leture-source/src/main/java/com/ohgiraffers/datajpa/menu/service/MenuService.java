@@ -73,10 +73,10 @@ public class MenuService {
     // 4. 쿼리메소드 사용 (메소드명에 따라 자동으로 쿼리문을 작성)
     public List<MenuDTO> findByMenuPrice(Integer menuPrice) {
 
-         List<Menu> menuList = menuRepository.findByMenuPriceGreaterThan(menuPrice);
+//         List<Menu> menuList = menuRepository.findByMenuPriceGreaterThan(menuPrice);
 
         // 전달 받은 가격을 초과하는 메뉴 목록 조회 + 가격 오름차순 조회
-//         List<Menu> menuList = menuRepository.findByMenuPriceGreaterThanOrderByMenuPrice(menuPrice);
+         List<Menu> menuList = menuRepository.findByMenuPriceGreaterThanOrderByMenuPrice(menuPrice);
 
         // 전달 받은 가격을 초과하는 메뉴 목록  조회 + 전달 받은 정렬 기준
 //        List<Menu> menuList = menuRepository.findByMenuPriceGreaterThan(menuPrice
