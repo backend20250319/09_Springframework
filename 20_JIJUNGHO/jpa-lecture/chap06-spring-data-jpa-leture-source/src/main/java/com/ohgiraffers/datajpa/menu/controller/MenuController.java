@@ -27,7 +27,7 @@ public class MenuController {
     private final MenuService menuService;
 
 
-    @GetMapping("/{menuCode}/")
+    @GetMapping("/{menuCode}")
     public String findMenuByCode(@PathVariable("menuCode") int menuCode, Model model) {
 
         // client에서 받은 값을 service단으로 보내기 위함
