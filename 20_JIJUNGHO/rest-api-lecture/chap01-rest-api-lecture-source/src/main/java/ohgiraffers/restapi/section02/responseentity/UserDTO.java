@@ -13,6 +13,6 @@ public class UserDTO {
 
     private int no;
     private String id;
-    private String pws;
+    private String pwd;
     private String name;
 }
