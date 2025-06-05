@@ -1,11 +1,12 @@
 package ohgiraffers.restapi.section01.response;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,5 +44,13 @@ public class ResponseController {
 
         return messageList.stream().collect(Collectors.toMap(Message::getHttpStatusCode, Message::getMessage));
     }
+
+    /* 5. File 응답 */
+    @GetMapping(value = "/image", produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getImage() throws IOException {
+        return getClass().getResourceAsStream("/images/spring.png").readAllBytes();
+    }
+
+    /*  */
 
 }
