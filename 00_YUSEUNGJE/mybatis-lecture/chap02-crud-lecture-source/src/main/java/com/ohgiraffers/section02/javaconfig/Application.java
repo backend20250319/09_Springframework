@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class Application {
 
     public static void main(String[] args) {
-
         Scanner sc = new Scanner(System.in);
         MenuController menuController = new MenuController();
         do {
@@ -26,7 +25,7 @@ public class Application {
                 case 2 :
                     menuController.selectMenuByMenuCode(inputMenuCode()); break;
                 case 3 :
-                     menuController.registMenu(inputMenu());  break;
+                    menuController.registMenu(inputMenu());  break;
                 case 4 :
                     menuController.modifyMenu(inputModifyMenu()); break;
                 case 5 :
