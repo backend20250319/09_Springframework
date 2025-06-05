@@ -5,7 +5,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
-
 @Entity
 @Table(name="tbl_category")
 @Getter
@@ -19,7 +18,6 @@ import lombok.*;
  * 입력 값 순서도 바뀌므로 검출하기 힘든 오류 발생 가능성이 있다. */
 /* @ToString : 사용 시 연관 관계 매핑 필드는 제거한다. */
 public class Category {
-
     @Id
     private int categoryCode;
     private String categoryName;

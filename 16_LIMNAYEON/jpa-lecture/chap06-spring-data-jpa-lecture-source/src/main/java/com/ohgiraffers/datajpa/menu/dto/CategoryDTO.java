@@ -8,7 +8,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CategoryDTO {
-
     private int categoryCode;
     private String categoryName;
     private Integer refCategoryCode;
