@@ -24,7 +24,6 @@ public class ResponeseEntityController {
         users.add(new UserDTO(1, "user01", "pass01", "유관순"));
         users.add(new UserDTO(2, "user02", "pass02", "홍길동"));
         users.add(new UserDTO(3, "user03", "pass03", "이순신"));
-
     }
 
     // 전체 회원 목록 조회
