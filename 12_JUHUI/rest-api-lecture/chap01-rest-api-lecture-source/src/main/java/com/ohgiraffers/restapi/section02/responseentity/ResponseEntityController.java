@@ -78,4 +78,21 @@ public class ResponseEntityController {
         return ResponseEntity.created(URI.create("/entity/users/" + users.get(users.size() - 1).getNo())).build();
     }
 
+    @PutMapping("/users/{userNo}")
+    public ResponseEntity<Void> modifyUser(
+            @PathVariable int userNo, @RequestBody UserDTO userDTO
+    ) {
+        UserDTO foundUser = users.stream().filter(user -> user.getNo() == userNo).findFirst().get();
+        foundUser.setPwd(userDTO.getPwd());
+        foundUser.setName(userDTO.getName());
+
+        return ResponseEntity.created(URI.create("/entity/users/" + userNo)).build();
+    }
+
+    @DeleteMapping("/users/{userNo}")
+    public ResponseEntity<Void> deleteUser(@PathVariable int userNo) {
+        UserDTO foundUser = users.stream().filter(user -> user.getNo() == userNo).findFirst().get();
+        users.remove(foundUser);
+        return ResponseEntity.noContent().build();
+    }
 }
