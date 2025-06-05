@@ -1,4 +1,4 @@
-package ohgiraffers.datajpa.menu.dto;
+package com.ohgiraffers.datajpa.menu.dto;
 
 import lombok.Getter;
 import lombok.Setter;

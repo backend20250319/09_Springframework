@@ -1,4 +1,4 @@
-package ohgiraffers.datajpa.menu.dto;
+package com.ohgiraffers.datajpa.menu.dto;
 
 /* Spring Data JPA Projection : Repository 계층에서 JPQL 또는 네이티브 쿼리를 작성할 때, 결과를 바로 DTO로 매핑하여 반환
  *    - 변환 단계를 줄여서 쿼리 결과를 바로 필요한 DTO로 받아올 수 있음, 불필요한 데이터를 로딩하지 않아 성능 최적화에 기여

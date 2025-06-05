@@ -10,8 +10,8 @@ public class Pagenation {
                 = (int) (Math.ceil((double) currentPage / defaultButtonCount) - 1)
                 * defaultButtonCount + 1;
         int endPage = startPage + defaultButtonCount - 1;
-        if(page.getTotalPages() < endPage) endPage = page.getTotalPages();
-        if(page.getTotalPages() == 0 && endPage == 0) endPage = startPage;
+        if (page.getTotalPages() < endPage) endPage = page.getTotalPages();
+        if (page.getTotalPages() == 0 && endPage == 0) endPage = startPage;
         return new PagingButton(currentPage, startPage, endPage);
     }
 }

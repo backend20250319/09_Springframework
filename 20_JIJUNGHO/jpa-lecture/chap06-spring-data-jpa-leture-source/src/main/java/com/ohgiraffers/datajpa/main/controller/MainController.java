@@ -1,4 +1,4 @@
-package ohgiraffers.datajpa.main.controller;
+package com.ohgiraffers.datajpa.main.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

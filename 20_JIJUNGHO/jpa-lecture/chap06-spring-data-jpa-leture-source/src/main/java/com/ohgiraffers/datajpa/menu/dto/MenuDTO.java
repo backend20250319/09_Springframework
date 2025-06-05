@@ -1,7 +1,7 @@
-package ohgiraffers.datajpa.menu.dto;
+package com.ohgiraffers.datajpa.menu.dto;
 
 import lombok.*;
-import ohgiraffers.datajpa.menu.entity.Menu;
+import com.ohgiraffers.datajpa.menu.entity.Menu;
 
 @Getter
 @Setter

@@ -1,10 +1,13 @@
-package ohgiraffers.datajpa.menu.service;
+package com.ohgiraffers.datajpa.menu.service;
 
+import com.ohgiraffers.datajpa.menu.dto.MenuDTO;
+import com.ohgiraffers.datajpa.menu.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
-import ohgiraffers.datajpa.menu.dto.MenuDTO;
-import ohgiraffers.datajpa.menu.entity.Menu;
-import ohgiraffers.datajpa.menu.repository.MenuRepository;
+import com.ohgiraffers.datajpa.menu.entity.Menu;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -43,12 +46,27 @@ public class MenuService {
         return modelMapper.map(menu, MenuDTO.class);
     }
 
-    // 2. findAll(), findAll([Sort])
+    // 2. findAll(), findAll([Sort]) 페이징 처리 X
     public List<MenuDTO> findMenuList() {
         // List<Menu> menuList = menuRepository.findAll(); // 정렬 미적용
         List<Menu> menuList = menuRepository.findAll(Sort.by("menuCode").ascending());
         return menuList.stream().map(
-                menu -> modelMapper.map(menu, MenuDTO.class))
+                        menu -> modelMapper.map(menu, MenuDTO.class))
                 .toList();
+    }
+
+    // 3. findAll(pageable)
+    public Page<MenuDTO> findMenuList(Pageable pageable) {
+        /*
+         * page는 0부터 시작하는 부분을 1로 보정
+         * 정렬 기준은 전달받지 않고, 고정된 기준(menuCode)으로 수행
+         * */
+        pageable = PageRequest.of(
+                pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageSize(),
+                Sort.by("menuCode").ascending()
+        );
+        Page<Menu> menuList = menuRepository.findAll(pageable);
+        return menuList.map(menu -> modelMapper.map(menu, MenuDTO.class));
     }
 }

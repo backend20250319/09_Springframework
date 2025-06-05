@@ -1,4 +1,4 @@
-package ohgiraffers.datajpa.menu.entity;
+package com.ohgiraffers.datajpa.menu.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
