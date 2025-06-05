@@ -5,7 +5,10 @@ import ohgiraffers.datajpa.menu.dto.MenuDTO;
 import ohgiraffers.datajpa.menu.entity.Menu;
 import ohgiraffers.datajpa.menu.repository.MenuRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,12 +33,22 @@ public class MenuService {
      * 4. MapStruct 라이브러리
      * 5. Spring Data JPA Projection */
 
+    // 1. findById()
     public MenuDTO findMenuByMenuCode(int menuCode) {
 
         Menu menu = menuRepository.findById(menuCode)
                 .orElseThrow(IllegalAccessError::new);
 
-//         return MenuDTO.changeMenuDTO(menu);
+        // return MenuDTO.changeMenuDTO(menu);
         return modelMapper.map(menu, MenuDTO.class);
+    }
+
+    // 2. findAll(), findAll([Sort])
+    public List<MenuDTO> findMenuList() {
+        // List<Menu> menuList = menuRepository.findAll(); // 정렬 미적용
+        List<Menu> menuList = menuRepository.findAll(Sort.by("menuCode").ascending());
+        return menuList.stream().map(
+                menu -> modelMapper.map(menu, MenuDTO.class))
+                .toList();
     }
 }
