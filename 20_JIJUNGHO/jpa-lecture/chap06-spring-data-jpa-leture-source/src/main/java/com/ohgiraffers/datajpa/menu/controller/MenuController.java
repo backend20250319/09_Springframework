@@ -2,6 +2,7 @@ package com.ohgiraffers.datajpa.menu.controller;
 
 import com.ohgiraffers.datajpa.common.Pagenation;
 import com.ohgiraffers.datajpa.common.PagingButton;
+import com.ohgiraffers.datajpa.menu.dto.CategoryDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.ohgiraffers.datajpa.menu.dto.MenuDTO;
@@ -11,10 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -73,8 +71,7 @@ public class MenuController {
     }
 
     @GetMapping("/querymethod")
-    public void queryMethodPage() {
-    }
+    public void queryMethodPage() {}
 
     @GetMapping("/search")
     public String findByMenuPrice(@RequestParam Integer menuPrice, Model model) {
@@ -83,5 +80,22 @@ public class MenuController {
 
         model.addAttribute("menuList", menuList);
         return "menu/searchResult";
+    }
+
+    @GetMapping("/regist")
+    public void registPage(){}
+
+    @GetMapping("/category")
+    @ResponseBody // 응답 데이터의 body에 반환 값을 그대로 전달하겠다는 의미(ViewResolver 사용 X)
+    public List<CategoryDTO> findCategoryList(){
+        return menuService.findAllCategory();
+    }
+
+    @PostMapping("/regist")
+    public String registMenu(@ModelAttribute MenuDTO menuDTO) { // input의 name값과 field명이 동일해야 한다.
+        menuService.registMenu(menuDTO);
+
+        // insert, update, delete의 행위후에 새로운 request, response를 만들기 위해 redirect
+        return "redirect:/menu/list";
     }
 }
