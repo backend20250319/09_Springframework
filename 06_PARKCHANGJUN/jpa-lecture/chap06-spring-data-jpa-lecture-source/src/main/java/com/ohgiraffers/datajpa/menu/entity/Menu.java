@@ -23,4 +23,6 @@ public class Menu {
     public void modifyMenuName(String menuName) {
         this.menuName = menuName;
     }
+
+
 }
