@@ -96,7 +96,7 @@ public class MenuService {
         return categoryList.stream().map(category -> modelMapper.map(category, CategoryDTO.class)).toList();
     }
 
-    // 6. save : 엔티티 저장
+    // 6. 메뉴 등록 save : 엔티티 저장
     @Transactional
     public void registMenu(MenuDTO menuDTO) {
         menuRepository.save(modelMapper.map(menuDTO, Menu.class));
