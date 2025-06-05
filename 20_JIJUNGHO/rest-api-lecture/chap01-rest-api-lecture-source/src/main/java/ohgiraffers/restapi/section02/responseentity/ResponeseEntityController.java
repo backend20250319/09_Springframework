@@ -62,7 +62,7 @@ public class ResponeseEntityController {
         /* 응답에 대한 body 설정 */
         Map<String, Object> responseMap = new HashMap<>();
         UserDTO foundUser = users.stream().filter(user -> user.getNo() == userNo).findFirst().get();
-        responseMap.put("foundUser", foundUser);
+        responseMap.put("user", foundUser);
 
         /* 응답 메세지 설정 */
         ResponeseMessage responeseMessage = new ResponeseMessage(
@@ -83,4 +83,16 @@ public class ResponeseEntityController {
         return ResponseEntity.created(URI.create("/entity/users" + users.get(users.size() - 1).getNo())).build();
     }
 
+    // 회원 정보 수정
+    @PutMapping("/users/{userNo}")
+    public ResponseEntity<Void> modifyuser(
+            @PathVariable int userNo, @RequestBody UserDTO userDTO) {
+        UserDTO foundUser = users.stream().filter(user -> user.getNo() == userNo).findFirst().get();
+        foundUser.setPwd(userDTO.getPwd());
+        foundUser.setName(userDTO.getName());
+
+        return ResponseEntity.created(URI.create("/entity/users" + userNo)).build();
+    }
+
+    
 }
