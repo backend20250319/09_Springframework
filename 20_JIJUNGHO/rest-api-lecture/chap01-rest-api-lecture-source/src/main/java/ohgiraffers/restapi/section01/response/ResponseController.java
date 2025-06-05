@@ -55,6 +55,7 @@ public class ResponseController {
     /* 6. ResponseEntity 응답 */
     @GetMapping("/entity")
     public ResponseEntity<Message> getEntity() {
+        ResponseEntity.status(400);
         return ResponseEntity.ok(new Message(200, "정상 수행"));
     }
 
