@@ -74,7 +74,7 @@ public class HateoasController {
 
 //        return new ResponseEntity<>(responseMessage, httpHeaders, HttpStatus.OK);
         return ResponseEntity
-                .ok()
+                .ok()₩
                 .headers(httpHeaders)
                 .body(responseMessage);
     }
