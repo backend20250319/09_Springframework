@@ -21,6 +21,6 @@ public class validTestController {
 
     @PostMapping("/users")
     public ResponseEntity<?> addUser(@Validated @RequestBody SecurityProperties.User user) {
-        return ResponseEntity.created(URI.create("/vaild/users/1")).build();
+        return ResponseEntity.created(URI.create("/valid/users/1")).build();
     }
 }
