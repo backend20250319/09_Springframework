@@ -1,6 +1,8 @@
 package com.ohgiraffers.datajpa.menu.service;
 
+import com.ohgiraffers.datajpa.menu.dto.CategoryDTO;
 import com.ohgiraffers.datajpa.menu.dto.MenuDTO;
+import com.ohgiraffers.datajpa.menu.entity.Category;
 import com.ohgiraffers.datajpa.menu.entity.Menu;
 import com.ohgiraffers.datajpa.menu.respository.MenuRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -81,5 +84,32 @@ public class MenuService {
         return menuList.stream().map(menu -> modelMapper.map(menu, MenuDTO.class)).toList();
     }
 
-    //
+    /* 5. */
+    public List<CategoryDTO> findAllCategory() {
+        List<Category> categoryList = menuRepository.findAllCategory();
+        return categoryList.stream().map(category -> modelMapper.map(category, CategoryDTO.class)).toList();
+    }
+
+    /* 6. save : 엔터티 저장 */
+    public void registMenu(MenuDTO menuDTO) {
+        menuRepository.save(modelMapper.map(menuDTO, Menu.class));
+    }
+
+    /* 수정 : 엔터티 객체의 필드 값을 수정 */
+    @Transactional
+    public void modifyMenu(MenuDTO menuDTO) {
+        // menuCode 를 통해서 영속화된 변경할 정보를 조회
+        Menu foundMenu = menuRepository.findById(menuDTO.getMenuCode()).orElseThrow(IllegalAccessError::new);
+
+        // setter 를 기계적으로 만들어 놓으면 엔터티 객체가 수정에 열린 상태가 되므로
+        // 필요한 기능에 맞춘 메소드를 구현해서 수정
+        foundMenu.modifyMenuName(menuDTO.getMenuName());
+
+    }
+
+    /* 8. delete */
+    @Transactional
+    public void deleteMenu(int menuCode) {
+        menuRepository.deleteById(menuCode);
+    }
 }
