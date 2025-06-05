@@ -101,4 +101,22 @@ public class MenuService {
     public void registMenu(MenuDTO menuDTO) {
         menuRepository.save(modelMapper.map(menuDTO, Menu.class));
     }
+
+    // 7. 메뉴 수정 : 엔티티 객체의 필드 값을 수정
+    @Transactional
+    public void modifyMenu(MenuDTO menuDTO) {
+        // menuCode를 통해서 영속화된 변경할 정보를 조회
+        Menu foundMenu = menuRepository.findById(menuDTO.getMenuCode())
+                .orElseThrow(IllegalAccessError::new);
+
+        // setter를 기계적으로 만들어 놓으면 엔티티 객체가 수정에 열린 상태가 되므로
+        // 필요한 기능에 맞춘 메소드를 구현해서 수정
+        foundMenu.modifyMenuName(menuDTO.getMenuName());
+    }
+
+    // 8. 메뉴 삭제 delete
+    @Transactional
+    public void deleteMenu(int menuCode) {
+        menuRepository.deleteById(menuCode);
+    }
 }

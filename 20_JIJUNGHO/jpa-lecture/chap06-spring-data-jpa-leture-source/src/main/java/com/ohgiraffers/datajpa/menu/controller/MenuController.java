@@ -24,7 +24,6 @@ public class MenuController {
 
     private final MenuService menuService;
 
-
     @GetMapping("/{menuCode}")
     public String findMenuByCode(@PathVariable("menuCode") int menuCode, Model model) {
 
@@ -71,7 +70,8 @@ public class MenuController {
     }
 
     @GetMapping("/querymethod")
-    public void queryMethodPage() {}
+    public void queryMethodPage() {
+    }
 
     @GetMapping("/search")
     public String findByMenuPrice(@RequestParam Integer menuPrice, Model model) {
@@ -82,12 +82,14 @@ public class MenuController {
         return "menu/searchResult";
     }
 
+    // 메뉴 등록하기
     @GetMapping("/regist")
-    public void registPage(){}
+    public void registPage() {
+    }
 
     @GetMapping("/category")
     @ResponseBody // 응답 데이터의 body에 반환 값을 그대로 전달하겠다는 의미(ViewResolver 사용 X)
-    public List<CategoryDTO> findCategoryList(){
+    public List<CategoryDTO> findCategoryList() {
         return menuService.findAllCategory();
     }
 
@@ -97,5 +99,28 @@ public class MenuController {
 
         // insert, update, delete의 행위후에 새로운 request, response를 만들기 위해 redirect
         return "redirect:/menu/list";
+    }
+
+    // 메뉴 수정하기
+    @GetMapping("/modify")
+    public void modifyPage() {
+    }
+
+    @PostMapping("/modify")
+    public String modifyMenu(@ModelAttribute MenuDTO menuDTO) {
+        menuService.modifyMenu(menuDTO);
+        return "redirect:/menu/" + menuDTO.getMenuCode();
+    }
+
+    // 메뉴 삭제하기
+    @GetMapping("/delete")
+    public void detelePage() {
+    }
+
+    @PostMapping("/delete")
+    public String deleteMenu(@RequestParam int menuCode) {
+        menuService.deleteMenu(menuCode);
+        return "redirect:/menu/list";
+
     }
 }
