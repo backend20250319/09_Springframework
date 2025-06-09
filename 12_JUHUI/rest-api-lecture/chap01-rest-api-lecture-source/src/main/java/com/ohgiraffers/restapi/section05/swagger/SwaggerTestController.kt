@@ -3,6 +3,8 @@ package com.ohgiraffers.restapi.section05.swagger
 import com.ohgiraffers.restapi.section02.responseentity.ResponseMessage
 import com.ohgiraffers.restapi.section02.responseentity.UserDTO
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -20,10 +22,10 @@ class SwaggerTestController {
 
     //private List<UserDTO> users;
 
-    public SwaggerTestController() {
-        users = new ArrayList<>();
-        users.add(new UserDTO(1, "user01", "pass01", "유관순"));
-    }
+//    public SwaggerTestController() {
+//        users = new ArrayList<>();
+//        users.add(new UserDTO(1, "user01", "pass01", "유관순"));
+//    }
 
     @Operation(
         summary = "전체 회원 조회", description = "전체 회원 목록을 조회한다."
@@ -76,6 +78,10 @@ class SwaggerTestController {
             .build<ResponseMessage>()
     }
 
+    @Operation(
+        summary = "회원 등록"
+    )
+
     @PutMapping("/users/{userNo}")
     fun modifyUser(
         @PathVariable userNo: Int, @RequestBody userDTO: UserDTO
@@ -86,6 +92,16 @@ class SwaggerTestController {
 
         return ResponseEntity.created(URI.create("/entity/users/$userNo")).build()
     }
+    @Operation(
+        summary = "회원 번호로 회원 삭제"
+    )
+
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "회원 정보 삭제 완료")
+        @ApiResponse()
+
+    }
+    )
 
     @DeleteMapping("/users/{userNo}")
     fun deleteUser(@PathVariable userNo: Int): ResponseEntity<Void> {

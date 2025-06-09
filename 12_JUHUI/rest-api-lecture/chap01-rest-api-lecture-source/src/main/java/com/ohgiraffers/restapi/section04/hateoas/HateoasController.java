@@ -3,6 +3,7 @@ package com.ohgiraffers.restapi.section04.hateoas;
 import com.ohgiraffers.restapi.section02.responseentity.ResponseMessage;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/hateoas")
@@ -33,17 +36,18 @@ public class HateoasController {
     @GetMapping("/users")
     public ResponseEntity<ResponseMessage> findAllUsers() {
         /* Hateoas 설정 */
-        List<EntityModel<UserDTO>> userWithRel = users.stream().map(
-                user -> EntityModel.of(
-                        user,
-                        linkTo(methodOn(HateoasController.class).findUserByNo(user.getNo())).withSelRel(),
-                        linkTo(methodOn(HateoasController.class).findAllUsers()).withRel("users")
-                )
+        List<EntityModel<UserDTO>> usersWithRel = users.stream().map(
+                user ->
+                        EntityModel.of(
+                                user,
+                                linkTo(methodOn(HateoasController.class).findUserByNo(user.getNo())).withSelfRel(),
+                                linkTo(methodOn(HateoasController.class).findAllUsers()).withRel("users")
+                        )
         ).toList();
 
-        /* 응답 바디 설정*/
+        /* 응답 바디 설정 */
         Map<String, Object> responseMap = new HashMap<>();
-        responseMap.put("users", userWithRel);
+        responseMap.put("users", usersWithRel);
 
         /* 응답 메세지 설정 */
         ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공", responseMap);
@@ -53,22 +57,26 @@ public class HateoasController {
     @GetMapping("/users/{userNo}")
     public ResponseEntity<ResponseMessage> findUserByNo(@PathVariable("userNo") int userNo) {
         /* 응답 헤더 설정 : JSON 응답이 default 이기는 하나 변경이 필요한 경우 HttpHeaders 설정 변경 */
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(
                 new MediaType("application", "json", StandardCharsets.UTF_8)
         );
 
-        /* 응답 바디(내가 담고 보낼 객체 정보 값) 설정 */
+        /* 응답 바디 설정 */
         Map<String, Object> responseMap = new HashMap<>();
         UserDTO foundUser = users.stream().filter(user -> user.getNo() == userNo).findFirst().get();
-        responseMap.put("users", users);
+        responseMap.put("user", foundUser);
 
         /* 응답 메세지 설정 */
         ResponseMessage responseMessage = new ResponseMessage(
                 200, "조회 성공", responseMap
         );
 
-        //return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
-        return ResponseEntity.ok().headers(HttpHeaders).body(responseMessage);
+//        return new ResponseEntity<>(responseMessage, httpHeaders, HttpStatus.OK);
+        return ResponseEntity
+                .ok()
+                .headers(httpHeaders)
+                .body(responseMessage);
     }
+
 }
