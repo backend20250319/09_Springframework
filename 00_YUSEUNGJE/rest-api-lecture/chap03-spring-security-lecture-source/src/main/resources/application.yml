@@ -4,15 +4,15 @@ spring:
     url: jdbc:mysql://localhost:3306/cqrs
     username: swcamp
     password: swcamp
-  output:
-    ansi:
-      enabled: always
-
-image:
-  image-dir: C:/upload/productimgs
-  image-url: http://localhost:8080/productimgs/
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: mappers/**/*.xml
-  type-aliases-package: com.ohgiraffers.cqrs.products.query.dto
+  type-aliases-package: com.ohgiraffers.springsecurity.query.dto
