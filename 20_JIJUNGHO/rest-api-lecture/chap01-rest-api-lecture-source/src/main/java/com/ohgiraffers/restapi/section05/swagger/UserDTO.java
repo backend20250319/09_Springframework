@@ -1,4 +1,4 @@
-package ohgiraffers.restapi.section04.hateoas;
+package com.ohgiraffers.restapi.section05.swagger;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

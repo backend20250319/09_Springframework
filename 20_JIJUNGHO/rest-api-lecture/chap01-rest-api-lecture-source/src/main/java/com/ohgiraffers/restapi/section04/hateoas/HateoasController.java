@@ -1,9 +1,8 @@
-package ohgiraffers.restapi.section04.hateoas;
+package com.ohgiraffers.restapi.section04.hateoas;
 
-import ohgiraffers.restapi.section02.responseentity.ResponeseMessage;
+import com.ohgiraffers.restapi.section02.responseentity.ResponseMessage;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +33,7 @@ public class HateoasController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<ResponeseMessage> findAllUser(){
+    public ResponseEntity<ResponseMessage> findAllUser(){
         /* Hateoas 설정 */
         List<EntityModel<UserDTO>> userWithRel = users.stream().map(
                 user -> EntityModel.of(
@@ -49,12 +48,12 @@ public class HateoasController {
         responseMap.put("users", userWithRel);
         
         /* 응답 메세지 설정 */
-        ResponeseMessage responeseMessage = new ResponeseMessage(200, "조회 성공!", responseMap);
-        return ResponseEntity.ok().body(responeseMessage);
+        ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
+        return ResponseEntity.ok().body(responseMessage);
     }
 
     @GetMapping("/users/{userNo}")
-    public ResponseEntity<ResponeseMessage> findUserbyNo(@PathVariable("userNo") int userNo){
+    public ResponseEntity<ResponseMessage> findUserbyNo(@PathVariable("userNo") int userNo){
         /* 응답 헤더 설정 : JSON 응답이 default 이기는 하나 변경이 필요한 경우 HttpHeaders 설정 변경 */
         HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -68,12 +67,12 @@ public class HateoasController {
         responseMap.put("user", foundUser);
 
         /* 응답 메세지 설정 */
-        ResponeseMessage responeseMessage = new ResponeseMessage(
+        ResponseMessage responseMessage = new ResponseMessage(
                 200, "조회 성공", responseMap
         );
 
 //        return new ResponseEntity<>(responeseMessage, httpHeaders, HttpStatus.OK);
-        return ResponseEntity.ok().headers(httpHeaders).body(responeseMessage);
+        return ResponseEntity.ok().headers(httpHeaders).body(responseMessage);
     }
 
 }

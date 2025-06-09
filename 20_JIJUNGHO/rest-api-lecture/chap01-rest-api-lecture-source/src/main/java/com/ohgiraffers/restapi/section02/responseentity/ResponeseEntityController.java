@@ -1,4 +1,4 @@
-package ohgiraffers.restapi.section02.responseentity;
+package com.ohgiraffers.restapi.section02.responseentity;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class ResponeseEntityController {
 
     // 전체 회원 목록 조회
     @GetMapping("/user")
-    public ResponseEntity<ResponeseMessage> findAllUser() {
+    public ResponseEntity<ResponseMessage> findAllUser() {
         /* 응답 헤더 설정 : JSON 응답이 default 이기는 하나 변경이 필요한 경우 HttpHeaders 설정 변경 */
         HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -41,16 +41,16 @@ public class ResponeseEntityController {
         responseMap.put("users", users);
 
         /* 응답 메세지 설정 */
-        ResponeseMessage responeseMessage = new ResponeseMessage(
+        ResponseMessage responseMessage = new ResponseMessage(
                 200, "조회 성공", responseMap
         );
 
-        return new ResponseEntity<>(responeseMessage, httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(responseMessage, httpHeaders, HttpStatus.OK);
     }
 
     // 회원 번호로 회원 조회
     @GetMapping("/users/{userNo}")
-    public ResponseEntity<ResponeseMessage> findUserByNo(@PathVariable int userNo) {
+    public ResponseEntity<ResponseMessage> findUserByNo(@PathVariable int userNo) {
         /* 응답 헤더 설정 : JSON 응답이 default 이기는 하나 변경이 필요한 경우 HttpHeaders 설정 변경 */
         HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -64,16 +64,16 @@ public class ResponeseEntityController {
         responseMap.put("user", foundUser);
 
         /* 응답 메세지 설정 */
-        ResponeseMessage responeseMessage = new ResponeseMessage(
+        ResponseMessage responseMessage = new ResponseMessage(
                 200, "조회 성공", responseMap
         );
 
-        return new ResponseEntity<>(responeseMessage, httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(responseMessage, httpHeaders, HttpStatus.OK);
     }
 
     // 신규 회원 등록
     @PostMapping("/users")
-    public ResponseEntity<ResponeseMessage> registUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<ResponseMessage> registUser(@RequestBody UserDTO userDTO) {
 
         int lastUserNo = users.get(users.size() - 1).getNo();
         userDTO.setNo(lastUserNo + 1);

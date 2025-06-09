@@ -1,4 +1,4 @@
-package ohgiraffers.restapi.section02.responseentity;
+package com.ohgiraffers.restapi.section05.swagger;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,8 +11,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
-public class ResponeseMessage {
-
+public class ResponseMessage {
     private int httpStatus;
     private String message;
     private Map<String, Object> result;

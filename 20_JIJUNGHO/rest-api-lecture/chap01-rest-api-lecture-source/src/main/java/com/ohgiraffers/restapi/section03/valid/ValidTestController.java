@@ -1,4 +1,4 @@
-package ohgiraffers.restapi.section03.valid;
+package com.ohgiraffers.restapi.section03.valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

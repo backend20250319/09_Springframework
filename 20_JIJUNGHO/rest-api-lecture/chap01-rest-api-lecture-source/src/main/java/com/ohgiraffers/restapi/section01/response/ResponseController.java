@@ -1,4 +1,4 @@
-package ohgiraffers.restapi.section01.response;
+package com.ohgiraffers.restapi.section01.response;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

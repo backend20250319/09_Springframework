@@ -1,4 +1,4 @@
-package ohgiraffers.restapi.section03.valid;
+package com.ohgiraffers.restapi.section03.valid;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
