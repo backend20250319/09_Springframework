@@ -1,7 +1,9 @@
 package com.ohgiraffers.cqrs.products.query.controller;
 
 import com.ohgiraffers.cqrs.common.dto.ApiResponse;
+import com.ohgiraffers.cqrs.products.query.dto.request.ProductSearchRequest;
 import com.ohgiraffers.cqrs.products.query.dto.response.ProductDetailResponse;
+import com.ohgiraffers.cqrs.products.query.dto.response.ProductListResponse;
 import com.ohgiraffers.cqrs.products.query.service.ProductQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,15 @@ public class ProductQueryController {
     @GetMapping("/products/{productCode}")
     public ResponseEntity<ApiResponse<ProductDetailResponse>> getProduct(@PathVariable Long productCode) {
         ProductDetailResponse response = productQueryService.getProduct(productCode);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 상품 목록 조회
+    @GetMapping("/products")
+    public ResponseEntity<ApiResponse<ProductListResponse>> getProducts(
+            ProductSearchRequest productSearchRequest
+    ) {
+        ProductListResponse response = productQueryService.getProducts(productSearchRequest); // productSearchRequest 삭제시 전체 조회
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 }
