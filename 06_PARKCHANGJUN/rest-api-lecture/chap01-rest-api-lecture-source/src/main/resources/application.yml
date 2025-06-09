@@ -1,0 +1,9 @@
+springdoc:
+  # 스캔할 패키지 설정(지정한 패키지 하위만 API 문서에 포함된다.
+  packages-to-scan: com.ohgiraffers.restapi.section05
+  # consumes : 요청 데이터 타입, produces : 응답 데이터 타입
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  # 임시방편으로 hateoas사용 안한다는 뜻.
+#  enable-hateoas: false
+# 이러면 버전을 내리지 않아도 되지만 hateoas를 못쓰는 단점이 있고 버전을 내리는 방법이 있음.
