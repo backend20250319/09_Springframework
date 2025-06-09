@@ -51,4 +51,13 @@ public class ProductCommandController {
         return ResponseEntity
                 .ok(ApiResponse.success(null));
     }
+
+    // 상품 삭제
+    @DeleteMapping("/products/{productCode}")
+    public ResponseEntity<ApiResponse<Void>> deleteProduct(@PathVariable Long productCode) {
+
+        productCommandService.deleteProduct(productCode);
+
+        return ResponseEntity.ok(ApiResponse.success(null));
+    }
 }

@@ -46,6 +46,12 @@ public class ProductCommandService {
         return product.getProductCode();
     }
 
+    /***
+     * 상품 수정 구현
+     * @param productCode
+     * @param productUpdateRequest
+     * @param productImg
+     */
     @Transactional
     public void updateProduct(Long productCode, ProductUpdateRequest productUpdateRequest, MultipartFile productImg) {
         // 1. 상품코드를 이용해서 jpa를 통해서 데이터베이스에 있는 데이터를 조회하고, 영속성 컨텍스트에 넣어둔다.
@@ -69,5 +75,17 @@ public class ProductCommandService {
                 productUpdateRequest.getProductStock(),
                 ProductStatus.valueOf(productUpdateRequest.getStatus())
         );
+    }
+
+    /***
+     * 상품 삭제 구현 (soft delete : @SqlDelete 어노테이션 활용)
+     * @param productCode
+     * @return
+     */
+    @Transactional
+    public void deleteProduct(Long productCode) {
+
+        productRepository.deleteById(productCode);
+
     }
 }
