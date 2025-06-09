@@ -23,7 +23,7 @@ public class ProductCommandService {
     private final FileStorageService fileStorageService;
     private final ModelMapper modelMapper;
 
-    @Value("${imag.image-url}")
+    @Value("${image.image-url}")
     private String IMAGE_URL;
 
     /***
