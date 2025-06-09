@@ -2,6 +2,7 @@ package com.ohgiraffers.cqrs.products.command.application.controller;
 
 import com.ohgiraffers.cqrs.common.dto.ApiResponse;
 import com.ohgiraffers.cqrs.products.command.application.dto.request.ProductCreateRequest;
+import com.ohgiraffers.cqrs.products.command.application.dto.request.ProductUpdateRequest;
 import com.ohgiraffers.cqrs.products.command.application.dto.response.ProductCommandResponse;
 import com.ohgiraffers.cqrs.products.command.application.service.ProductCommandService;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -21,6 +20,7 @@ public class ProductCommandController {
 
     private final ProductCommandService productCommandService;
 
+    // 상품 등록
     @PostMapping("/products")
     public ResponseEntity<ApiResponse<ProductCommandResponse>> createProduct(
             @RequestPart @Validated ProductCreateRequest productCreateRequest,
@@ -37,5 +37,18 @@ public class ProductCommandController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ApiResponse.success(response));
+    }
+
+    // 상품 수정
+    @PutMapping("/products/{productCode}")
+    public ResponseEntity<ApiResponse<Void>> updateProduct(
+            @PathVariable Long productCode,
+            @RequestPart @Validated ProductUpdateRequest productUpdateRequest,
+            @RequestPart(required = false) MultipartFile productImg
+    ) {
+        productCommandService.updateProduct(productCode, productUpdateRequest, productImg);
+
+        return ResponseEntity
+                .ok(ApiResponse.success(null));
     }
 }
