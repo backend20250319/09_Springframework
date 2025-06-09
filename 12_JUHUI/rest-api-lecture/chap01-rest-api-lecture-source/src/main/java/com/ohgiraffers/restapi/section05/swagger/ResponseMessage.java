@@ -12,7 +12,6 @@ import java.util.Map;
 @Setter
 @ToString
 public class ResponseMessage {
-
     private int httpStatus;
     private String message;
     private Map<String, Object> results;

@@ -1,7 +1,5 @@
 package com.ohgiraffers.restapi.section05.swagger
 
-import com.ohgiraffers.restapi.section02.responseentity.ResponseMessage
-import com.ohgiraffers.restapi.section02.responseentity.UserDTO
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
@@ -19,25 +17,22 @@ import java.util.*
 @RestController
 @RequestMapping("/swagger")
 class SwaggerTestController {
+    private val users: MutableList<UserDTO> = ArrayList()
 
-    //private List<UserDTO> users;
+    init {
+        users.add(UserDTO(1, "user01", "pass01", "유관순"))
+        users.add(UserDTO(2, "user02", "pass02", "홍길동"))
+        users.add(UserDTO(3, "user03", "pass03", "이순신"))
+    }
 
-//    public SwaggerTestController() {
-//        users = new ArrayList<>();
-//        users.add(new UserDTO(1, "user01", "pass01", "유관순"));
-//    }
-
-    @Operation(
-        summary = "전체 회원 조회", description = "전체 회원 목록을 조회한다."
-    )
-
+    @Operation(summary = "전체 회원 조회", description = "전체 회원 목록을 조회한다.")
     @GetMapping("/users")
     fun findAllUsers(): ResponseEntity<ResponseMessage> {
         /* 응답 헤더 설정 : JSON 응답이 default 이기는 하나 변경이 필요한 경우 HttpHeaders 설정 변경 */
-        val headers = HttpHeaders()
-        headers.contentType = MediaType("application", "json", StandardCharsets.UTF_8)
+        val httpHeaders = HttpHeaders()
+        httpHeaders.contentType = MediaType("application", "json", StandardCharsets.UTF_8)
 
-        /* 응답 바디(내가 담고 보낼 객체 정보 값) 설정 */
+        /* 응답 바디 설정 */
         val responseMap: MutableMap<String, Any> = HashMap()
         responseMap.put("users", users)
 
@@ -46,18 +41,19 @@ class SwaggerTestController {
             200, "조회 성공", responseMap
         )
 
-        return ResponseEntity(responseMessage, headers, HttpStatus.OK)
+        return ResponseEntity(responseMessage, httpHeaders, HttpStatus.OK)
     }
 
-    @GetMapping("users/{userNo}")
+    @Operation(summary = "회원 번호로 회원 조회")
+    @GetMapping("/users/{userNo}")
     fun findUserByNo(@PathVariable userNo: Int): ResponseEntity<ResponseMessage> {
         /* 응답 헤더 설정 : JSON 응답이 default 이기는 하나 변경이 필요한 경우 HttpHeaders 설정 변경 */
-        val headers = HttpHeaders()
-        headers.contentType = MediaType("application", "json", StandardCharsets.UTF_8)
+        val httpHeaders = HttpHeaders()
+        httpHeaders.contentType = MediaType("application", "json", StandardCharsets.UTF_8)
 
-        /* 응답 바디(내가 담고 보낼 객체 정보 값) 설정 */
+        /* 응답 바디 설정 */
         val responseMap: MutableMap<String, Any> = HashMap()
-        val foundUser: UserDTO = users.stream().filter { user: UserDTO -> user.no == userNo }.findFirst().get()
+        val foundUser = users.stream().filter { user: UserDTO -> user.getNo() === userNo }.findFirst().get()
         responseMap.put("user", foundUser)
 
         /* 응답 메세지 설정 */
@@ -65,47 +61,41 @@ class SwaggerTestController {
             200, "조회 성공", responseMap
         )
 
-        return ResponseEntity(responseMessage, headers, HttpStatus.OK)
+        return ResponseEntity(responseMessage, httpHeaders, HttpStatus.OK)
     }
 
+    @Operation(summary = "회원 등록")
     @PostMapping("/users")
     fun registUser(@RequestBody userDTO: UserDTO): ResponseEntity<ResponseMessage> {
-        val lastUserNo: Int = users.get(users.size - 1).getNo()
-        userDTO.no = lastUserNo + 1
+        val lastUserNo: Int = users[users.size - 1].getNo()
+        userDTO.setNo(lastUserNo + 1)
         users.add(userDTO)
 
-        return ResponseEntity.created(URI.create("/entity/users/" + users.get(users.size - 1).getNo()))
+        return ResponseEntity
+            .created(URI.create("/entity/users/" + users[users.size - 1].getNo()))
             .build<ResponseMessage>()
     }
 
-    @Operation(
-        summary = "회원 등록"
-    )
-
+    @Operation(summary = "회원 번호로 회원 수정")
     @PutMapping("/users/{userNo}")
     fun modifyUser(
         @PathVariable userNo: Int, @RequestBody userDTO: UserDTO
     ): ResponseEntity<Void> {
-        val foundUser: UserDTO = users.stream().filter { user: UserDTO -> user.no == userNo }.findFirst().get()
-        foundUser.pwd = userDTO.pwd
-        foundUser.name = userDTO.name
+        val foundUser = users.stream().filter { user: UserDTO -> user.getNo() === userNo }.findFirst().get()
+        foundUser.setPwd(userDTO.getPwd())
+        foundUser.setName(userDTO.getName())
 
         return ResponseEntity.created(URI.create("/entity/users/$userNo")).build()
     }
-    @Operation(
-        summary = "회원 번호로 회원 삭제"
+
+    @Operation(summary = "회원 번호로 회원 삭제")
+    @ApiResponses(
+        ApiResponse(responseCode = "204", description = "회원 정보 삭제 완료"),
+        ApiResponse(responseCode = "400", description = "잘못 입력 된 파라미터")
     )
-
-    @ApiResponses({
-        @ApiResponse(responseCode = "204", description = "회원 정보 삭제 완료")
-        @ApiResponse()
-
-    }
-    )
-
     @DeleteMapping("/users/{userNo}")
     fun deleteUser(@PathVariable userNo: Int): ResponseEntity<Void> {
-        val foundUser: UserDTO = users.stream().filter { user: UserDTO -> user.no == userNo }.findFirst().get()
+        val foundUser = users.stream().filter { user: UserDTO -> user.getNo() === userNo }.findFirst().get()
         users.remove(foundUser)
         return ResponseEntity.noContent().build()
     }
