@@ -1,5 +1,10 @@
 package com.ohgiraffers.springsecurity.config;
 
+import com.ohgiraffers.springsecurity.jwt.JstAuthenticationFilter;
+import com.ohgiraffers.springsecurity.jwt.JwtTokenProvider;
+import com.ohgiraffers.springsecurity.jwt.RestAccessDeniedHandler;
+import com.ohgiraffers.springsecurity.jwt.RestAuthenticationEntryPoint;
+import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +14,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
@@ -20,6 +27,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableMethodSecurity   // @PreAuthorize @PostAuthorize
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    private final UserDetailsService userDetailsService;
+    private final RestAccessDeniedHandler restAccessDeniedHandler;
+    private final JwtTokenProvider jwtTokenProvider;
 
     /* 비밀번호 암호화 */
     @Bean
@@ -34,14 +46,26 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 // 세션 로그인을 사용하지 않고 -> 토큰 인증 방식 로그인으로 설정
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // 인증 실패, 인가 실패 핸들러 추가
+                .exceptionHandling(exception ->
+                        exception
+                                .authenticationEntryPoint(restAuthenticationEntryPoint) // 인증 실패
+                                .accessDeniedHandler(restAccessDeniedHandler))     // 인가 실패
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(HttpMethod.POST, "/api/v1/users", "/api/v1/auth/login", "/api/v1/auth/refresh").permitAll()
+                        auth.requestMatchers(HttpMethod.POST, "/api/v1/users", "/api/v1/auth/login", "/api/v1/auth/refresh", "/api/v1/auth/logout").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/me").hasAuthority("USER")
                                 .anyRequest().authenticated() // : 모든 요청에 인증이 필요함
-                );
-                /* cors 설정 */
-                http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
-                return http.build();
+                )
+                // 커스텀 인증 필터(JWT를 사용해서 확인)를 인증 필터 앞에 삽입
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        /* cors 설정 */
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+        return http.build();
+    }
+
+    @Bean
+    public Filter jwtAuthenticationFilter() {
+        return new JstAuthenticationFilter(jwtTokenProvider, userDetailsService);
     }
 
     @Bean

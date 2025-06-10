@@ -62,12 +62,12 @@ public class AuthService {
                 .orElseThrow(() -> new BadCredentialsException("해당 유저로 조회되는 리프레시 토큰 없음"));
 
         // 넘어온 리프레시 토큰 값과의 일치 확인
-        if(!storedToken.getToken().equals(providedRefreshToken)) {
+        if (!storedToken.getToken().equals(providedRefreshToken)) {
             throw new BadCredentialsException("리프레시 토큰 일치하지 않음");
         }
 
         // DB에 저장 된 만료일과 현재 시간 비교 (추가 검증)
-        if(storedToken.getExpiryDate().before(new Date())) {
+        if (storedToken.getExpiryDate().before(new Date())) {
             throw new BadCredentialsException("리프레시 토큰 유효시간 만료");
         }
 
@@ -94,5 +94,12 @@ public class AuthService {
                 .refreshToken(refreshToken)
                 .build();
 
+    }
+
+    public void logout(String refreshToken) {
+        // refresh token의 서명 및 만료 검증
+        jwtTokenProvider.validateToken(refreshToken);
+        String username = jwtTokenProvider.getUsernameFromJWT(refreshToken);
+        refreshTokenRepository.deleteById(username);
     }
 }

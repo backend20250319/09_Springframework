@@ -32,12 +32,28 @@ public class AuthController {
             // HttpOnly 쿠키에서 읽어온다.
             @CookieValue(name = "refreshToken", required = false) String refreshToken
     ) {
-        if (refreshToken != null) {
+        if (refreshToken == null) {
             // refresh token이 없으면 401 반환
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         TokenResponse tokenResponse = authService.refreshToken(refreshToken);
         return buildTokenResponse(tokenResponse);
+    }
+
+    // 로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse<Void>> logout(
+            @CookieValue(name = "refreshToken", required = false) String refreshToken
+    ) {
+        if (refreshToken != null) {
+            authService.logout(refreshToken);
+        }
+        
+        // 만료용 쿠키 생성
+        ResponseCookie deleteCookie = createDeleteRefreshTokenCookie();
+
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, deleteCookie.toString())
+                .body(ApiResponse.success(null));
     }
 
     /* accessToken과 refreshToken을 body와 쿠키에 담아 반환 */
