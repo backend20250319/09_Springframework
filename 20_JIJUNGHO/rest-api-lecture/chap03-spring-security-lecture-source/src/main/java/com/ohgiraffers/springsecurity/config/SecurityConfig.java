@@ -35,7 +35,7 @@ public class SecurityConfig {
                 // 세션 로그인을 사용하지 않고 -> 토큰 인증 방식 로그인으로 설정
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(HttpMethod.POST, "/api/v1/users", "/api/v1/auth/login", "/api/v1/refresh").permitAll()
+                        auth.requestMatchers(HttpMethod.POST, "/api/v1/users", "/api/v1/auth/login", "/api/v1/auth/refresh").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/me").hasAuthority("USER")
                                 .anyRequest().authenticated() // : 모든 요청에 인증이 필요함
                 );

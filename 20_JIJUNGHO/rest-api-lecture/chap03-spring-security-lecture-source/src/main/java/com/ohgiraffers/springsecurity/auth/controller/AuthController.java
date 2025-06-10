@@ -6,6 +6,7 @@ import com.ohgiraffers.springsecurity.auth.service.AuthService;
 import com.ohgiraffers.springsecurity.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,18 @@ public class AuthController {
         return buildTokenResponse(tokenResponse);
     }
 
-   
+    @PostMapping("/refresh")
+    public ResponseEntity<ApiResponse<TokenResponse>> refreshToken(
+            // HttpOnly 쿠키에서 읽어온다.
+            @CookieValue(name = "refreshToken", required = false) String refreshToken
+    ) {
+        if (refreshToken != null) {
+            // refresh token이 없으면 401 반환
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        TokenResponse tokenResponse = authService.refreshToken(refreshToken);
+        return buildTokenResponse(tokenResponse);
+    }
 
     /* accessToken과 refreshToken을 body와 쿠키에 담아 반환 */
     private ResponseEntity<ApiResponse<TokenResponse>> buildTokenResponse(TokenResponse tokenResponse) {
