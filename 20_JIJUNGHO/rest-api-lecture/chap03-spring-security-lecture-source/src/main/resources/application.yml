@@ -16,3 +16,5 @@ mybatis:
     map-underscore-to-camel-case: true
   mapper-locations: mappers/**/*.xml
   type-aliases-package: com.ohgiraffers.springsecurity.query.dto
+jwt:
+  secret: b3NYbRhj+5qJNPlq3J/wG40leLzZgYZwXr7+mfzXGjVTGCDLTmGEaIxt0dp49omOXiXBjFMW/5GD67+mH+0q+w==
