@@ -20,16 +20,17 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
-    private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public TokenResponse login(LoginRequest request) {
 
-        User user = UserRepository.findByUsername(request.getUsername())
+        User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new BadCredentialsException("올바르지 않은 아이디 혹은 비밀번호"));
+
         // matches 메소드를 이용해서 비밀번호 검증 (평문, 암호화된 값)
-        if(!PasswordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("올바르지 않은 아이디 혹은 비밀번호");
         }
 
@@ -93,5 +94,12 @@ public class AuthService {
                 .refreshToken(refreshToken)
                 .build();
 
+    }
+
+    public void logout(String refreshToken) {
+        // refresh token 의 서명 및 만료 검증
+        jwtTokenProvider.validateToken(refreshToken);
+        String username = jwtTokenProvider.getUsernameFromJWT(refreshToken);
+        refreshTokenRepository.deleteById(username);
     }
 }

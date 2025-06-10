@@ -6,17 +6,15 @@ import com.ohgiraffers.springsecurity.auth.service.AuthService;
 import com.ohgiraffers.springsecurity.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 
 @RestController
-@RequestMapping("/api/vi/auth")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -27,6 +25,28 @@ public class AuthController {
 
         TokenResponse tokenResponse = authService.login(request);
         return buildTokenResponse(tokenResponse);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<ApiResponse<TokenResponse>> refreshToken(
+            @CookieValue(name = "refreshToken", required = false) String refreshToken) { // HttpOnly 쿠키에서 읽어온다.
+        if(refreshToken == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // refreshToken 이 없으면 401 반환
+        }
+        TokenResponse tokenResponse = authService.refreshToken(refreshToken);
+        return buildTokenResponse(tokenResponse);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse<Void>> logout(
+            @CookieValue(name = "refreshToken", required = false) String refreshToken
+    ) {
+        if(refreshToken != null) {
+            authService.logout(refreshToken);
+        }
+
+        ResponseCookie deleteCookie = createDeleteRefreshTokenCookie(); //만료용 쿠키 생성
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, deleteCookie.toString()).body(ApiResponse.success(null));
     }
 
     /* accessToken 과 refreshToken 을 body 와 cookie 에 담아 반환 */

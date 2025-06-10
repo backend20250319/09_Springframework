@@ -1,5 +1,7 @@
 package com.ohgiraffers.springsecurity.config;
 
+import com.ohgiraffers.springsecurity.jwt.RestAuthenticationEntryPoint;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,8 +21,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity // HTTP 요청의 인증/인가를 처리할 수 있게 도와주는 어노테이션
 @EnableMethodSecurity // @PreAuthorize @PostAuthorize 인가할 때 권한이 맞는지 확인하는 어노테이션
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     // 비밀번호 암호화
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -34,7 +38,12 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable) // 세션 로그인 x -> 토큰 로그인 설정
                 .sessionManagement(session
                 -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/api/v1/users", "/api/v1/auth/login", "/api/v1/refresh").permitAll()
+                // 인증 실패, 인가 실패 핸들러
+                .exceptionHandling(exception ->
+                        exception.authenticationEntryPoint(restAuthenticationEntryPoint) // 인증 실패
+                        .accessDeniedHandler() // 인가 실패
+                )
+                .authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/api/v1/users", "/api/v1/auth/login", "/api/v1/auth/refresh", "/api/v1/auth/logout").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/me").hasAuthority("USER")
                         .anyRequest().authenticated()
                 );
