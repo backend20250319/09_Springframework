@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/cqrs
+    driver-class-name: com.mysql.jdbc.Driver
+    username: swcamp
+    password: swcamp
+
+  image:
+    image-dir: ./src/main/resources/static/productimgs
+    image-url: http://laocalhost:8080/productimgs/
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mappers/**/*.xml
+  type-aliases-package: com.ohgiraffers.cqrs.products.query.dto
