@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cqrs
+    username: swcamp
+    password: Swcamp13!
+# info 색깔 다르게 나오게 하고싶으면 넣고 안넣어도 됨
+#  output:
+#    ansi:
+#      enabled: always
+
+image:
+  image-dir: /Users/parkchangjun/Documents/Dev/upload/productimgs
+  image-url: http://localhost:8080/productimgs/
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mappers/**/*.xml
+  type-aliases-package: com.ohgiraffers.cqrs.product.query.dto

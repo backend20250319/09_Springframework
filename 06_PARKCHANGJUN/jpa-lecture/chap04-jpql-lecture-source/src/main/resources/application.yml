@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/menudb
+    username: ohgiraffers
+    password: ohgiraffers
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    properties:
+      hibernate:
+        format_sql: true
+    mapping-resources:
+      - section08/namedquery/menu-query.xml
+  output:
+    ansi:
+      enabled: always
+
+# DB 연결 : menudb MySQL 사용, 사용자 : ohgiraffers
+# 테이블 생성 : Hibernate가 자동으로 테이블 만들지 않음(ddl:auto : none)
+#SQL출력 : 콘솔에 실행 쿼리 보기(show-sql : true, format_sql : true)
+# 컬럼 이름 장동 변환 : 카멜 -> 언더스코어 (ex:menuCode -> menu_code)

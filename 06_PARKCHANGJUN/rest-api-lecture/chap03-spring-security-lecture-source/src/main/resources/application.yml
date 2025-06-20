@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cqrs
+    username: swcamp
+    password: Swcamp13!
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: ture
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mappers/**/*.xml
+  type-aliases-package: com.ohgiraffers.springsecurity.query.dto
+jwt:
+  secret: i3czzKz7ifxKa/PIh8zdKl7RHcolf7vLv/CUEZR66UYy5L88xT5Ydt+gDNItwmC6A/SyaYdhWZOFXTW9XGHxbA==
+  expiration: 1800000 # 30분 (access token)
+  refresh-expiration: 604800000 # 7일 (refresh token)
