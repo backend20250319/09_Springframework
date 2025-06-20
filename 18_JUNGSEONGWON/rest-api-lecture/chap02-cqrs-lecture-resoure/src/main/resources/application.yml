@@ -1,0 +1,15 @@
+image:
+  image-dir: C:/upload/productimgs
+  image-url: https://localhost:8080/productimgs
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cqrs
+    username : swcamp
+    password : swcamp
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mappers/**/*.xml
+  type-aliases-package: com.jsw.cqrs.products.query.dto
