@@ -1,4 +1,4 @@
-#spring.application.name=chap02-mapping-lecture-source
+#spring.application.name=chap05-native-query-lecture-source
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -8,8 +8,12 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     properties:
       hibernate:
         format_sql: true
-
+  output:
+    ansi:
+      enabled: always

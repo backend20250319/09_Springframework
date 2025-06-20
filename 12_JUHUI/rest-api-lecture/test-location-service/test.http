@@ -1,0 +1,22 @@
+### GET 테스트
+GET http://localhost:8081/api/v1/hello
+
+### POST 테스트
+POST http://localhost:8081/api/v1/hello
+Content-Type: application/json
+
+{
+  "name": "홍대맛집",
+  "category": "한식"
+}
+
+### PUT 테스트
+PUT http://localhost:8081/api/v1/hello/123
+Content-Type: application/json
+
+{
+  "name": "수정된맛집"
+}
+
+### DELETE 테스트
+DELETE http://localhost:8081/api/v1/hello/123

@@ -1,0 +1,23 @@
+#spring.application.name=chap03-spring-security-lecture-source
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cqrs
+    username: swcamp
+    password: swcamp
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mappers/**/*.xml
+  type-aliases-package: com.ohgiraffers.springsecurity.query.dto
+jwt:
+  secret: aOAX8TCpyEiqXdZVT6qoCUe+zkihor2Unc6E34iaXiE9M/ROg1MKCUmTuklPHA+dCQFD3AGbT7wEfHlquk4obA==
+  expiration: 1800000 # 30분 (access token 에서 사용할 거라고 지정)
+  refresh-expiration: 604800000 # 7일 (refresh token)
