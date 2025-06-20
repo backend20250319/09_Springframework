@@ -46,10 +46,10 @@ class ProblemsOfUsingDirectTests {
     void testDirectSelectSQL() throws SQLException {
 
         /* tip. ctrl + shift + u : 블럭지정 대소문자 변환 */
-        // given
+        // given : SQL 쿼리문 작성
         String query = "SELECT menu_code, menu_name, menu_price, category_code, orderable_status from tbl_menu";
 
-        // when
+        // when : JDBC API를 사용하여 데이터베이스와 직접 상호작용
         Statement stmt = con.createStatement();
         ResultSet rset = stmt.executeQuery(query);
 
@@ -65,7 +65,7 @@ class ProblemsOfUsingDirectTests {
             menuList.add(menu);
         }
 
-        // then
+        // then : 결과 검증 및 close
         Assertions.assertNotNull(menuList);
 
         rset.close();
@@ -84,8 +84,8 @@ class ProblemsOfUsingDirectTests {
         menu.setOrderableStatus("Y");
 
         String query = "INSERT INTO tbl_menu(menu_name, menu_price, category_code, orderable_status) VALUES(?, ?, ?,  ?)";
-        // when
 
+        // when
         PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.setString(1, menu.getMenuName());
         pstmt.setDouble(2, menu.getMenuPrice());
@@ -93,6 +93,7 @@ class ProblemsOfUsingDirectTests {
         pstmt.setString(4, menu.getOrderableStatus());
 
         int result = pstmt.executeUpdate();
+
         // then
         Assertions.assertEquals(1, result);
         pstmt.close();

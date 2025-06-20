@@ -12,7 +12,7 @@ public class ExceptionHandlerController {
     public String nullPonterExceptionTest(){
         String str = null;
         System.out.println(str.charAt(0));  // 의도적으로 NullPointerException 발생
-        return "/";
+        return "/"; // 이까지 도달하지 않음
     }
 
     @GetMapping("/controller-user")
